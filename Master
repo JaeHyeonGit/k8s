@@ -84,3 +84,8 @@ echo 'alias k=kubectl' >>~/.bashrc
 echo 'complete -F __start_kubectl k' >>~/.bashrc
 
 . ~/.bashrc
+
+#######################################################################################################
+
+# Worker Node Join
+kubeadm token create --print-join-command
