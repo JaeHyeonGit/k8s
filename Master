@@ -79,13 +79,14 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/we
 
 # Alias
 echo '' >>~/.bashrc
-echo 'source <(kubectl completion bash)' >>~/.bashrc
+echo 'source <(kubectl completion bash)' >> ~/.bashrc
 echo 'alias k=kubectl' >>~/.bashrc
-echo 'complete -F __start_kubectl k' >>~/.bashrc
+echo 'complete -F __start_kubectl k' >> ~/.bashrc
 
 . ~/.bashrc
 
 #######################################################################################################
 
 # Worker Node Join
+# 해당 값을 입력하면 kubadm 명령어와 token 값이 나오는데 해당 내용을 Worker Node에 입력
 kubeadm token create --print-join-command
