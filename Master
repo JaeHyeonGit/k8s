@@ -73,11 +73,13 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 # CNI 설치(weave-net)
+#node간 pod 통신을 위한 CNI 설치
 kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
 # CNI 설치(calico)
 # kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
 # Alias
+#kubectl을 k로 쓰기위한 Alias등록
 echo '' >>~/.bashrc
 echo 'source <(kubectl completion bash)' >> ~/.bashrc
 echo 'alias k=kubectl' >>~/.bashrc
