@@ -1,4 +1,4 @@
-#20260403 CNI 조치완료
+#20260403 각 NODE에 배포되어 있는 POD 통신 불가능 조치완료
 # Install Kubernetes Master Node
 
 # 쿠버네티스 실행을 위한 Swap 비활성화
