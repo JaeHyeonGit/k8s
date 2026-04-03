@@ -10,6 +10,7 @@ Container Network Interface : Calico
 해결 내용 : InitIalize 하는 과정에서 pod network의 cidr을 지정해줘야 함
 
 #Control Node의 InitIalize
+
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
 
