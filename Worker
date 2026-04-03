@@ -41,6 +41,7 @@ containerd config default | sudo tee /etc/containerd/config.toml
 # Containerd를 사용하려는 경우 runC용 systemd cgroup 로 구성
 sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 
+# 설정 반영을 위한 서비스 재시작
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
 sudo systemctl restart containerd
