@@ -1,5 +1,10 @@
 # Install Kubernetes Master Node
 
+# 쿠버네티스 실행을 위한 Swap 비활성화
+sudo swapoff -a
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+
+
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
 br_netfilter
@@ -20,16 +25,16 @@ sudo sysctl --system
 
 # Containerd 런타임 설치(Containerd)
 wget https://github.com/containerd/containerd/releases/download/v1.7.11/containerd-1.7.11-linux-amd64.tar.gz
-tar Czxvf /usr/local containerd-1.7.11-linux-amd64.tar.gz
+sudo tar Czxvf /usr/local containerd-1.7.11-linux-amd64.tar.gz
 
 # systemd 서비스 파일 다운로드
 wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service 
-mv containerd.service /usr/lib/systemd/system/
+sudo mv containerd.service /etc/systemd/system/
 
 # runc 설치
 # runc : container를 실행하기 위한 툴
 wget https://github.com/opencontainers/runc/releases/download/v1.1.10/runc.amd64
-install -m 755 runc.amd64 /usr/local/sbin/runc
+sudo install -m 755 runc.amd64 /usr/local/sbin/runc
 
 # Containerd config 파일 생성 - containerd를 수동으로 설치하는 경우 수동으로 생성해줘야 함
 mkdir -p /etc/containerd/
@@ -37,6 +42,11 @@ containerd config default | sudo tee /etc/containerd/config.toml
 
 # Containerd를 사용하려는 경우 runC용 systemd cgroup 로 구성
 sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+
+# 설정 반영을 위한 서비스 재시작
+sudo systemctl daemon-reload
+sudo systemctl enable --now containerd
+sudo systemctl restart containerd
 
 cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
 overlay
@@ -67,7 +77,7 @@ systemctl enable --now kubelet
 systemctl enable --now containerd
 
 # Control Node의 InitIalize
-kubeadm init
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
