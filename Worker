@@ -1,5 +1,9 @@
 # Install Kubernetes Master Node
 
+
+sudo swapoff -a
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
 br_netfilter
@@ -36,6 +40,10 @@ containerd config default | sudo tee /etc/containerd/config.toml
 
 # Containerd를 사용하려는 경우 runC용 systemd cgroup 로 구성
 sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now containerd
+sudo systemctl restart containerd
 
 cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
 overlay
