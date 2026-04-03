@@ -90,6 +90,8 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/we
 # CNI 설치(calico)
 # kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
+#################################여기까지 설치#############################################################
+
 # Alias
 #kubectl을 k로 쓰기위한 Alias등록
 echo '' >>~/.bashrc
