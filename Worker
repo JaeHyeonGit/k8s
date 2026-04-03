@@ -1,6 +1,6 @@
 # Install Kubernetes Master Node
 
-
+# 쿠버네티스 실행을 위한 Swap 비활성화
 sudo swapoff -a
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
